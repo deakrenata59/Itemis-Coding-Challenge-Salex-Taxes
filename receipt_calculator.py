@@ -62,6 +62,13 @@ def calculate_basket_details(items_list):
     print(f"Sales Taxes: {sales_taxes:.2f}")
     print(f"Total: {total:.2f}")
 
+"""Function that converts input line (either from text or from terminal)
+to a tuple containing the product and its price."""
+def handle_data(line):
+    data = list(map(lambda x: x.strip(), line.split(' at ')))
+    data[1] = float(data[1])
+    return tuple(data)
+
 """Function that reads the content of the shopping list
 from given file."""
 def read_from_file(file_path):
@@ -69,15 +76,30 @@ def read_from_file(file_path):
     try:
         with open(file_path, 'r') as file:
             for line in file:
-                data = list(map(lambda x: x.strip(), line.split(' at ')))
-                data[1] = float(data[1])
-                basket.append(tuple(data))
+                basket.append(handle_data(line))
         return basket
     except FileNotFoundError:
         print("Error: given file cannot be found.")
         sys.exit()
     except ValueError:
         print("Error: one or more given prices are not convertable.")
+        sys.exit()
+
+"""Function that reads user input from terminal until user types 'Done'."""
+def read_from_terminal():
+    try:
+        basket = []
+        print('The terminal will now keep reading your input until you type "Done".')
+        line = input("> ")
+        while line.lower() != "done":
+            basket.append(handle_data(line))
+            line = input("> ")
+        return basket
+    except ValueError:
+        print("Error: given price is not convertable.")
+        sys.exit()
+    except KeyboardInterrupt:
+        print("\nError: terminal input has been interrupted. Application is closed.")
         sys.exit()
 
 
@@ -97,7 +119,8 @@ if __name__ == "__main__":
                               ("1 packet of headache pills", 9.75),
                               ("1 box of imported chocolates", 11.25)])"""
     #print(tuple(map(lambda x: x.strip(),"1 book at 56.78".split('at'))))
-    calculate_basket_details(read_from_file('input1.txt'))
+    """calculate_basket_details(read_from_file('input1.txt'))
     calculate_basket_details(read_from_file('input2.txt'))
     calculate_basket_details(read_from_file('input3.txt'))
-    calculate_basket_details(read_from_file('input4.txt'))
+    calculate_basket_details(read_from_file('input4.txt'))"""
+    calculate_basket_details(read_from_terminal())
