@@ -71,10 +71,10 @@ def handle_data(line):
 
 """Function that reads the content of the shopping list
 from given file."""
-def read_from_file(file_path):
+def read_from_file(file_name):
     basket = []
     try:
-        with open(file_path, 'r') as file:
+        with open(file_name, 'r') as file:
             for line in file:
                 basket.append(handle_data(line))
         return basket
@@ -112,9 +112,9 @@ if __name__ == "__main__":
             print("Incorrect input, please try again:")
             number = input("> ")
         if number == '1':
-            print("Please type in the correct file path:")
-            file_path = input("> ")
-            calculate_basket_details(read_from_file(file_path))
+            print("Please type in the correct file name (make sure that it's in the same folder as the script):")
+            file_name = input("> ")
+            calculate_basket_details(read_from_file(file_name))
         else:
             calculate_basket_details(read_from_terminal())
     except KeyboardInterrupt:
