@@ -1,3 +1,5 @@
+import sys
+
 """List for store bought goods that are exempt of basic sales tax (10%).
 Important note: the values in this list are based on the given inputs.
 In case of new inputs this list might need further expansion of specific
@@ -60,6 +62,24 @@ def calculate_basket_details(items_list):
     print(f"Sales Taxes: {sales_taxes:.2f}")
     print(f"Total: {total:.2f}")
 
+"""Function that reads the content of the shopping list
+from given file."""
+def read_from_file(file_path):
+    basket = []
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                data = list(map(lambda x: x.strip(), line.split(' at ')))
+                data[1] = float(data[1])
+                basket.append(tuple(data))
+        return basket
+    except FileNotFoundError:
+        print("Error: given file cannot be found.")
+        sys.exit()
+    except ValueError:
+        print("Error: one or more given prices are not convertable.")
+        sys.exit()
+
 
 if __name__ == "__main__":
     """print(is_exempt_product("book"))
@@ -67,7 +87,7 @@ if __name__ == "__main__":
     print(is_exempt_product("imported box of CHOCOlates"))
     print(is_imported_product("importED box of CHOCOlates"))
     print(calculate_tax("importED box of CHOCOlates", 10.00))"""
-    calculate_basket_details([("1 book", 12.49),
+    """calculate_basket_details([("1 book", 12.49),
                             ("1 music CD", 14.99),
                             ("1 chocolate bar", 0.85)])
     calculate_basket_details([("1 imported box of chocolates", 10.00),
@@ -75,4 +95,9 @@ if __name__ == "__main__":
     calculate_basket_details([("1 imported bottle of perfume", 27.99),
                               ("1 bottle of perfume", 18.99),
                               ("1 packet of headache pills", 9.75),
-                              ("1 box of imported chocolates", 11.25)])
+                              ("1 box of imported chocolates", 11.25)])"""
+    #print(tuple(map(lambda x: x.strip(),"1 book at 56.78".split('at'))))
+    calculate_basket_details(read_from_file('input1.txt'))
+    calculate_basket_details(read_from_file('input2.txt'))
+    calculate_basket_details(read_from_file('input3.txt'))
+    calculate_basket_details(read_from_file('input4.txt'))
