@@ -10,23 +10,23 @@ basic_sales_tax = 10 #%
 
 import_duty = 5 #%
 
-"""Function that evaluates if given product is exempt of basic sales tax.
-By iterating through the exempt_goods list, if an item can be found as a
-substring inside the product name, then the product will be considered exempt."""
 def is_exempt_product(product):
+    """Function that evaluates if given product is exempt of basic sales tax.
+    By iterating through the exempt_goods list, if an item can be found as a
+    substring inside the product name, then the product will be considered exempt."""
     for object in exempt_goods:
         if object in product.lower():
             return True
     return False
 
-"""Function that evaluates if given product is imported. If so,
-import duty sales tax will need to be applied."""
 def is_imported_product(product):
+    """Function that evaluates if given product is imported. If so,
+    import duty sales tax will need to be applied."""
     return "imported" in product.lower()
 
-"""returns a tuple containing the new price and the total sales tax amount
-for the given product."""
 def calculate_tax(product, price):
+    """returns a tuple containing the new price and the total sales tax amount
+    for the given product."""
     total_tax = 0
     new_price = price
     if is_exempt_product(product) is False:
@@ -37,21 +37,21 @@ def calculate_tax(product, price):
         new_price += round_up(import_duty*price/100)
     return (new_price, total_tax)
 
-"""Function that returns tax in the desired format.
-we need to round it up to the last two digits. Following this, if 
-the last digit is in the (0,5] range, then that means we have to
-round it up to the nearest 5 (0.05). Else if the last digit is a 0 or
-bigger than 5, then we just round up as normal."""
 def round_up(number):
+    """Function that returns tax in the desired format.
+    we need to round it up to the last two digits. Following this, if 
+    the last digit is in the (0,5] range, then that means we have to
+    round it up to the nearest 5 (0.05). Else if the last digit is a 0 or
+    bigger than 5, then we just round up as normal."""
     number = f"{number:.2f}"
     if 0 < int(number[-1]) <= 5:
         return float(number[-len(number):-1]+"5")
     return round(float(number),1)
 
-"""Function that evaluates the whole basket (given list that contains tuples):
-prints out the new price for every product, and also the total sales tax and price
-for these items."""
 def calculate_basket_details(items_list):
+    """Function that evaluates the whole basket (given list that contains tuples):
+    prints out the new price for every product, and also the total sales tax and price
+    for these items."""
     sales_taxes = 0
     total = 0
     for item in items_list:
@@ -62,16 +62,16 @@ def calculate_basket_details(items_list):
     print(f"Sales Taxes: {sales_taxes:.2f}")
     print(f"Total: {total:.2f}")
 
-"""Function that converts input line (either from text or from terminal)
-to a tuple containing the product and its price."""
 def handle_data(line):
+    """Function that converts input line (either from text or from terminal)
+    to a tuple containing the product and its price."""
     data = list(map(lambda x: x.strip(), line.split(' at ')))
     data[1] = float(data[1])
     return tuple(data)
 
-"""Function that reads the content of the shopping list
-from given file."""
 def read_from_file(file_name):
+    """Function that reads the content of the shopping list
+    from given file."""
     basket = []
     try:
         with open(file_name, 'r') as file:
@@ -85,8 +85,8 @@ def read_from_file(file_name):
         print("Error: one or more given prices are not convertable.")
         sys.exit()
 
-"""Function that reads user input from terminal until user types 'Done'."""
 def read_from_terminal():
+    """Function that reads user input from terminal until user types 'Done'."""
     try:
         basket = []
         print('The terminal will now keep reading your input until you type "Done".')
