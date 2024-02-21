@@ -4,7 +4,7 @@ import sys
 Important note: the values in this list are based on the given inputs.
 In case of new inputs this list might need further expansion of specific
 food, book or medical product based goods."""
-exempt_goods = ["book", "chocolate", "headache pills", "pills"]
+exempt_goods = ["book", "chocolate", "pills"]
 
 basic_sales_tax = 10 #%
 
