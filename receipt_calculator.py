@@ -104,23 +104,19 @@ def read_from_terminal():
 
 
 if __name__ == "__main__":
-    """print(is_exempt_product("book"))
-    print(is_exempt_product("music CD"))
-    print(is_exempt_product("imported box of CHOCOlates"))
-    print(is_imported_product("importED box of CHOCOlates"))
-    print(calculate_tax("importED box of CHOCOlates", 10.00))"""
-    """calculate_basket_details([("1 book", 12.49),
-                            ("1 music CD", 14.99),
-                            ("1 chocolate bar", 0.85)])
-    calculate_basket_details([("1 imported box of chocolates", 10.00),
-                            ("1 imported bottle of perfume", 47.50)])
-    calculate_basket_details([("1 imported bottle of perfume", 27.99),
-                              ("1 bottle of perfume", 18.99),
-                              ("1 packet of headache pills", 9.75),
-                              ("1 box of imported chocolates", 11.25)])"""
-    #print(tuple(map(lambda x: x.strip(),"1 book at 56.78".split('at'))))
-    """calculate_basket_details(read_from_file('input1.txt'))
-    calculate_basket_details(read_from_file('input2.txt'))
-    calculate_basket_details(read_from_file('input3.txt'))
-    calculate_basket_details(read_from_file('input4.txt'))"""
-    calculate_basket_details(read_from_terminal())
+    print("If you would like to read the shopping list from a file, please type 1.")
+    print("If you would like to type in the shopping list from the terminal, please type 2.")
+    try:
+        number = input("> ").strip()
+        while number not in "12":
+            print("Incorrect input, please try again:")
+            number = input("> ")
+        if number == '1':
+            print("Please type in the correct file path:")
+            file_path = input("> ")
+            calculate_basket_details(read_from_file(file_path))
+        else:
+            calculate_basket_details(read_from_terminal())
+    except KeyboardInterrupt:
+        print("\nError: terminal input has been interrupted. Application is closed.")
+        sys.exit()
