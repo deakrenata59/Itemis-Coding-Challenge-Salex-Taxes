@@ -47,3 +47,7 @@ Write an application that prints out the receipt details for these shopping bask
 + in Windows environment: py receipt_calculator.py
 + in Linux environment: python3 receipt_calculator.py
 + Important Note: If you choose to read the receipt by file, please give the proper file name (for example: input1.txt) and make sure that the file is in the same folder as the python script.
+
+## Running unit tests:
++ in windows environment: py -m unittest -v test_recepit_calculator.py
++ in linux environment: python3 -m unittest -v test_recepit_calculator.py
