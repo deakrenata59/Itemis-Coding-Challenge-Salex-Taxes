@@ -1,4 +1,5 @@
 import sys
+import re
 
 """List for store bought goods that are exempt of basic sales tax (10%).
 Important note: the values in this list are based on the given inputs.
@@ -35,7 +36,7 @@ def calculate_tax(product, price):
     if is_imported_product(product):
         total_tax += round_up(import_duty*price/100)
         new_price += round_up(import_duty*price/100)
-    return (new_price, total_tax)
+    return (round(new_price,2), total_tax)
 
 def round_up(number):
     """Function that returns tax in the desired format.
@@ -65,7 +66,7 @@ def calculate_basket_details(items_list):
 def handle_data(line):
     """Function that converts input line (either from text or from terminal)
     to a tuple containing the product and its price."""
-    data = list(map(lambda x: x.strip(), line.split(' at ')))
+    data = list(map(lambda x: x.strip(), re.split(' at | AT ', line)))
     data[1] = float(data[1])
     return tuple(data)
 
@@ -79,10 +80,10 @@ def read_from_file(file_name):
                 basket.append(handle_data(line))
         return basket
     except FileNotFoundError:
-        print("Error: given file cannot be found.")
+        print("Error: given file cannot be found.", file=sys.stderr)
         sys.exit()
     except ValueError:
-        print("Error: one or more given prices are not convertable.")
+        print("Error: one or more given prices are not convertible.", file=sys.stderr)
         sys.exit()
 
 def read_from_terminal():
@@ -96,10 +97,10 @@ def read_from_terminal():
             line = input("> ")
         return basket
     except ValueError:
-        print("Error: given price is not convertable.")
+        print("Error: given price is not convertible.", file=sys.stderr)
         sys.exit()
     except KeyboardInterrupt:
-        print("\nError: terminal input has been interrupted. Application is closed.")
+        print("\nError: terminal input has been interrupted. Application is closed.", file=sys.stderr)
         sys.exit()
 
 
@@ -118,5 +119,5 @@ if __name__ == "__main__":
         else:
             calculate_basket_details(read_from_terminal())
     except KeyboardInterrupt:
-        print("\nError: terminal input has been interrupted. Application is closed.")
+        print("\nError: terminal input has been interrupted. Application is closed.", file=sys.stderr)
         sys.exit()
